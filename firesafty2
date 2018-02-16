@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <compat/deprecated.h>
 #define F_CPU 16000000
-uint8_t c=0,I_RH,D_RH,I_Temp,D_Temp,CheckSum;
+
 #define DHT_PIN 0
 void Request()
 {
@@ -111,7 +111,7 @@ int main(void)
   UART_Tstring("AT+CWJAP=\"Drago\",\"drago1234\"\r\n");/*connect to wifi*/
   _delay_ms(5000);
   dl;
-  UART_Tstring("AT+CIPMUX=1\r\n");/*multiplexing*/
+  UART_Tstring("AT+CIPMUX=0\r\n");/*multiplexing*/
   _delay_ms(4000);
   
   while(1)
@@ -123,35 +123,12 @@ int main(void)
     /*unsigned int a =readAnalag(1);
     uint8_t b=45;
     uint8_t c=55;*/
-
-    _delay_ms(3000);
-    UART_Tstring("AT+CIPSERVER=1,80\r\n");
     _delay_ms(4000);
-    UART_Tstring("AT+CIPSTART=4,\"TCP\",\"acet.ac.in\",80\r\n");
+    UART_Tstring("AT+CIPSTART=\"TCP\",\"acet.ac.in\",80\r\n");
     _delay_ms(6000);
     _delay_ms(5000);
     UART_Tstring("GET /firesafty/requestData/request.php?field=M1&field1=");
-    
-      //Request();            /*send request pulse*/
-                 /*receive response*/
-//      I_RH=Receive_data();      /*store first 8bit in I_RH*/
-//      D_RH=Receive_data();      /*store next 8bit in D_RH*/
-//      I_Temp=Receive_data();      /*store next 8bit in I_Temp*/
-//      D_Temp=Receive_data();      /*store next 8bit in D_Temp*/
-//      CheckSum=Receive_data();    /*store next 8bit in CheckSum*/
-//    if ((I_RH+D_RH+I_Temp+D_Temp)!=CheckSum)
-//    {
-//      UART_Tstring("error");
-//    }
-//    else
-//    {
-//      itoa(I_Temp,data,10);
-//      UART_Tstring(data);
-//      UART_Tstring(".");
-//      itoa(D_Temp,data,10);
-//      UART_Tstring(data);
-//    }
-    uint8_t a= readAnalag(0);
+     uint8_t a= readAnalag(0);
     itoa(a,x,10);
     UART_Tstring(x);
     _delay_ms(2000);
@@ -160,8 +137,7 @@ int main(void)
     uint8_t b= readAnalag(3);
     float mv = ( b/1024.0)*5000; 
 int cel = mv/10;
-float farh = (cel*9)/5 + 32;
-    itoa(cel,y,10);
+itoa(cel,y,10);
     UART_Tstring(y);
     UART_Tstring("&field3=");
     _delay_us(2000);
