@@ -7,41 +7,6 @@
 #include <compat/deprecated.h>
 #define F_CPU 16000000
 
-#define DHT_PIN 0
-void Request()
-{
-  DDRB  |=(1<<DHT_PIN);
-  _delay_ms(20);
-  PORTB &~(1<<DHT_PIN);
-  _delay_ms(20);
-  PORTB |=(1<<DHT_PIN);
-}
-
-void Response()
-{
-  DDRB &~(1<<DHT_PIN);
-  while(PINB & (1<<DHT_PIN));
-  while((PINB&(1<<DHT_PIN))==0);
-  while(PINB&(1<<DHT_PIN));
-}
-int8_t Receive_data()
-{
-  for(int q=0;q<8;q++)
-  {
-    while((PINB & (1<<DHT_PIN))==0);
-    _delay_us(30);
-    if(PIND&(1<<DHT_PIN))
-    c=(c<<1)|(0x01);
-    else
-    c =(c<<1);
-    while(PINB&(1<<DHT_PIN));
-  }
-  return c;
-  
-}
-
-
-
 uint16_t readAnalag(uint8_t num)
 {
   ADMUX = num;                   // select channel
@@ -86,13 +51,7 @@ void UART_Tstring(char *p)
   }
 }
 
-/*
-char RxChar (void)
-{
-  
-  while(!(UCSRA&(1<<RXC)));
-  return(UDR);
-}*/
+
 
 int main(void)
 {
@@ -117,12 +76,7 @@ int main(void)
   while(1)
   {
     
-    //PORTB=0x00;
-    //PINB=(1<<4);
     
-    /*unsigned int a =readAnalag(1);
-    uint8_t b=45;
-    uint8_t c=55;*/
     _delay_ms(4000);
     UART_Tstring("AT+CIPSTART=\"TCP\",\"acet.ac.in\",80\r\n");
     _delay_ms(6000);
@@ -136,8 +90,8 @@ int main(void)
     _delay_us(2000);
     uint8_t b= readAnalag(3);
     float mv = ( b/1024.0)*5000; 
-int cel = mv/10;
-itoa(cel,y,10);
+    int cel = mv/10;
+    itoa(cel,y,10);
     UART_Tstring(y);
     UART_Tstring("&field3=");
     _delay_us(2000);
