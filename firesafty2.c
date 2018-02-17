@@ -1,4 +1,9 @@
-
+/*
+AVR ATmega8
+Description : This code is based on ATmega8 and integreated with WIFI esp8266, mq135, flame sensor and lm35.
+Author :- S Sai Seran
+Co-Author :-M Pavan Sai
+*/
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdlib.h>
@@ -82,16 +87,19 @@ int main(void)
     _delay_ms(6000);
     _delay_ms(5000);
     UART_Tstring("GET /firesafty/requestData/request.php?field=M1&field1=");
-     uint8_t a= readAnalag(0);
-    itoa(a,x,10);
+    int a= readAnalag(0);
+    float mv = ((a/1024)*5000);
+    int cel_i = mv/10;
+    int cel_d = (mv*10) - (cel_i*100)
+    itoa(cel_i,x,10);
     UART_Tstring(x);
+    UART_Tstring(".");
+    UART_Tstring(cel_d);
     _delay_ms(2000);
     UART_Tstring("&field2=");
     _delay_us(2000);
     uint8_t b= readAnalag(3);
-    float mv = ( b/1024.0)*5000; 
-    int cel = mv/10;
-    itoa(cel,y,10);
+    itoa(b,y,10);
     UART_Tstring(y);
     UART_Tstring("&field3=");
     _delay_us(2000);
