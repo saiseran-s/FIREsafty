@@ -90,7 +90,7 @@ int main(void)
     int a= readAnalag(0);
     float mv = ((a/1024)*5000);
     int cel_i = mv/10;
-    int cel_d = (mv*10) - (cel_i*100)
+    int cel_d = (mv*10) - (cel_i*100);
     itoa(cel_i,x,10);
     UART_Tstring(x);
     UART_Tstring(".");
