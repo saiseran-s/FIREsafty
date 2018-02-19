@@ -1,7 +1,11 @@
 /*
 AVR ATmega8
 Description : This code is based on ATmega8 and integreated with WIFI esp8266, mq135, flame sensor and lm35.
+<<<<<<< HEAD
 Author    :- S Sai Seran
+=======
+Author :- S Sai Seran
+>>>>>>> b2bf74dd18901689ba0386500ff2ac9e89943407
 Co-Author :-M Pavan Sai
 */
 #include <avr/io.h>
@@ -68,6 +72,7 @@ int main(void)
     UART_Tstring("AT\r\n");     /*check wifi response*/
     _delay_ms(2000);
     
+<<<<<<< HEAD
     _delay_ms(2000);
     UART_Tstring("ATE0\r\n");
     dl;
@@ -113,5 +118,33 @@ int main(void)
   UART_Tstring("\r\n");
   _delay_ms(6000);
 
+=======
+    _delay_ms(4000);
+    UART_Tstring("AT+CIPSTART=\"TCP\",\"acet.ac.in\",80\r\n");
+    _delay_ms(6000);
+    _delay_ms(5000);
+    UART_Tstring("GET /firesafty/requestData/request.php?field=M1&field1=");
+    int a= readAnalag(0);
+    float mv = ((a/1024)*5000);
+    int cel_i = mv/10;
+    int cel_d = (mv*10) - (cel_i*100);
+    itoa(cel_i,x,10);
+    UART_Tstring(x);
+    UART_Tstring(".");
+    UART_Tstring(cel_d);
+    _delay_ms(2000);
+    UART_Tstring("&field2=");
+    _delay_us(2000);
+    uint8_t b= readAnalag(3);
+    itoa(b,y,10);
+    UART_Tstring(y);
+    UART_Tstring("&field3=");
+    _delay_us(2000);
+    uint8_t c=readAnalag(5);
+    itoa(c,z,10);
+    UART_Tstring(z);
+    UART_Tstring("\r\n");
+    _delay_ms(9000);
+>>>>>>> b2bf74dd18901689ba0386500ff2ac9e89943407
   }
 }
