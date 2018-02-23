@@ -93,8 +93,8 @@ int main(void)
   _delay_ms(5000);
   UART_Tstring(GET);
   _delay_us(1000);
-  uint8_t a = readAnalag(0);
-  float mv = {(a/1024.0)*5000};
+  uint8_t a = readAnalag(5);
+  float mv = (5*a*100/1024.0); 
   uint16_t cel_i = mv/10;
   uint16_t cel_d = [(mv*10.0) - (cel_i*100)];
   itoa(cel_i,x,10);
@@ -105,14 +105,14 @@ int main(void)
   _delay_ms(200);
   UART_Tstring(f2);
   _delay_us(2000);
-  uint16_t b = readAnalag(3);
+  uint16_t b = readAnalag(4);
   itoa(b,y,10);
   _delay_us(200);
   UART_Tstring(y);
   _delay_us(100);
   UART_Tstring(f3);
   _delay_us(2000);
-  uint16_t c = readAnalag(5);
+  uint16_t c = readAnalag(1);
   itoa(c,z,10);
   UART_Tstring(z);
   UART_Tstring("\r\n");
@@ -144,7 +144,9 @@ int main(void)
     itoa(c,z,10);
     UART_Tstring(z);
     UART_Tstring("\r\n");
-    _delay_ms(9000);
+    _delay_ms(4000);
+    UART_TSTRING("AT+CIPCLOSE\r\n");
+    
 >>>>>>> b2bf74dd18901689ba0386500ff2ac9e89943407
   }
 }
