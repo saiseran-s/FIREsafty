@@ -1,8 +1,6 @@
 /*
 AVR ATmega8
 Description : This code is based on ATmega8 and integreated with WIFI esp8266, mq135, flame sensor and lm35.
-<<<<<<< HEAD
-Author    :- S Sai Seran
 =======
 Author :- S Sai Seran
 >>>>>>> b2bf74dd18901689ba0386500ff2ac9e89943407
